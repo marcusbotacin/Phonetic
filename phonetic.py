@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Marcus Botacin - 2017
+
 import sys
 
 alphabet={
@@ -39,34 +43,48 @@ alphabet={
             '9':'Nine'
 }
 
-
+# Usage message
 def usage(name):
     print("./%s -e '<text to encode>'" % name)
     print("./%s -d '<text to decode>'" % name)
 
+# encode into phonetic
 def encode(text):
     phrase=[]
     for i in text:
+	# only upper case
         c=i.upper()
+	# - as separator
         if(c==" "):
             phrase.append("-")
+	# char conversion
         elif(c in alphabet):
             phrase.append(alphabet[c])
     return " ".join(phrase)
 
+# decode from phonetic
 def decode(text):
     phrase=[]
     for i in text:
-        if(i == "-" or i in alphabet):
+	# allowed separator
+        if(i == "-"):
+	    phrase.append(" - ")
+	# char converter
+	elif(i in alphabet):
             phrase.append(i)
-    return " ".join(phrase)
+    return "".join(phrase)
 
 
-if(len(sys.argv)!=3):
-    usage(sys.argv[0])
-elif(sys.argv[1]=="-e"):
-    print(encode(sys.argv[2]))
-elif(sys.argv[1]=="-d"):
-    print(decode(sys.argv[2]))
-else:
-    usage(sys.argv[0])
+# Entry Point
+
+if __name__ == "__main__":
+
+	# bin_name + option + message
+	if(len(sys.argv)!=3):
+	    usage(sys.argv[0])
+	elif(sys.argv[1]=="-e"):
+	    print(encode(sys.argv[2]))
+	elif(sys.argv[1]=="-d"):
+	    print(decode(sys.argv[2]))
+	else:
+	    usage(sys.argv[0])
